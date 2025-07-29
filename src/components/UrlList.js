@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
+// src/components/UrlList.jsx
+import React from 'react';
 
-const UrlList = () => {
-  const [urls, setUrls] = useState([]);
-
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('shortUrls') || '{}');
-    setUrls(Object.values(stored));
-  }, []);
+const UrlList = ({ urls }) => {
+  if (urls.length === 0) return null;
 
   return (
-    <div>
+    <div className="url-list">
       <h3>Shortened URLs</h3>
-      <ul>
-        {urls.map((item) => (
-          <li key={item.code}>
-            <a href={`/${item.code}`} target="_blank" rel="noopener noreferrer">
-              {item.shortUrl}
-            </a>
-            <p>{item.originalUrl}</p>
-          </li>
-        ))}
-      </ul>
+      {urls.map((item, index) => (
+        <div key={index} className="url-card">
+          <p><strong>Original:</strong> {item.longUrl}</p>
+          <p><strong>Short:</strong> <a href={item.longUrl} target="_blank" rel="noopener noreferrer">{item.shortUrl}</a></p>
+          {item.expiresAt && (
+            <p><strong>Expires at:</strong> {item.expiresAt.toLocaleString()}</p>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

@@ -1,95 +1,91 @@
-:root {
-  --primary-color: #4f46e5;
-  --text-color: #111;
-  --background: #f4f4f5;
-  --card-bg: #fff;
-  --border-radius: 0.75rem;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--background);
-  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
   margin: 0;
-  padding: 2rem;
+  padding: 0;
+  color: #333;
 }
 
 .container {
-  max-width: 800px;
-  margin: auto;
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  transition: all 0.3s ease-in-out;
+  max-width: 720px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-input {
-  padding: 10px 14px;
-  border-radius: var(--border-radius);
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+input[type="text"],
+input[type="url"],
+input[type="number"] {
+  flex: 1;
+  padding: 12px 15px;
+  font-size: 16px;
   border: 1px solid #ccc;
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 1rem;
-  transition: border 0.2s ease-in-out;
+  border-radius: 8px;
+  transition: border-color 0.2s ease-in-out;
 }
 
 input:focus {
-  border-color: var(--primary-color);
+  border-color: #3498db;
   outline: none;
 }
 
 button {
-  padding: 10px 20px;
-  background-color: var(--primary-color);
+  padding: 12px 20px;
+  background-color: #3498db;
   color: white;
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 button:hover {
-  background-color: #4338ca;
+  background-color: #2980b9;
 }
 
-ul {
-  list-style: none;
-  padding-left: 0;
+.url-card {
+  padding: 16px;
+  margin-bottom: 15px;
+  background: #eef3f7;
+  border-left: 4px solid #3498db;
+  border-radius: 6px;
 }
 
-li {
-  padding: 12px;
-  margin-bottom: 8px;
-  background: #ffffff;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: transform 0.2s ease-in-out;
+.url-card a {
+  color: #3498db;
+  font-weight: 500;
+  text-decoration: none;
+  word-break: break-all;
 }
 
-li:hover {
-  transform: scale(1.01);
+.url-card a:hover {
+  text-decoration: underline;
 }
 
-/* Optional: Dark Theme */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #f4f4f5;
-    --background: #1f1f23;
-    --card-bg: #2a2a30;
-    --primary-color: #8b5cf6;
+@media (max-width: 600px) {
+  .form {
+    flex-direction: column;
   }
 
-  input, button, .container {
-    background-color: var(--card-bg);
-    color: var(--text-color);
-  }
-
-  input {
-    border: 1px solid #444;
+  button {
+    width: 100%;
   }
 }
+

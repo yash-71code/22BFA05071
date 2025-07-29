@@ -1,52 +1,39 @@
+// src/components/UrlShortenerForm.jsx
 import React, { useState } from 'react';
 import { generateShortCode } from '../utils/shortCodeGenerator';
-import { logEvent } from '../middleware/loggerMiddleware';
 
-const UrlShortenerForm = () => {
-  const [originalUrl, setOriginalUrl] = useState('');
-  const [customCode, setCustomCode] = useState('');
+const UrlShortenerForm = ({ onShorten }) => {
+  const [longUrl, setLongUrl] = useState('');
+  const [expiry, setExpiry] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!longUrl) return;
 
-    const code = customCode || generateShortCode();
-    const shortUrl = `${window.location.origin}/${code}`;
+    const shortCode = generateShortCode();
+    const expiresAt = expiry ? new Date(Date.now() + parseInt(expiry) * 60000) : null; // expiry in minutes
 
-    const newEntry = {
-      code,
-      originalUrl,
-      shortUrl,
-      createdAt: new Date().toISOString(),
-      clicks: [],
-    };
+    const shortUrl = `https://short.ly/${shortCode}`;
+    onShorten({ longUrl, shortUrl, expiresAt });
 
-    // Store in localStorage
-    const urls = JSON.parse(localStorage.getItem('shortUrls') || '{}');
-    urls[code] = newEntry;
-    localStorage.setItem('shortUrls', JSON.stringify(urls));
-
-    // Log event
-    logEvent('SHORTEN_CREATED', newEntry);
-
-    alert(`Shortened URL: ${shortUrl}`);
-    setOriginalUrl('');
-    setCustomCode('');
+    setLongUrl('');
+    setExpiry('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form">
       <input
         type="url"
-        placeholder="Enter original URL"
-        value={originalUrl}
-        onChange={(e) => setOriginalUrl(e.target.value)}
+        placeholder="Enter long URL"
+        value={longUrl}
+        onChange={(e) => setLongUrl(e.target.value)}
         required
       />
       <input
-        type="text"
-        placeholder="Custom code (optional)"
-        value={customCode}
-        onChange={(e) => setCustomCode(e.target.value)}
+        type="number"
+        placeholder="Expiration (in minutes)"
+        value={expiry}
+        onChange={(e) => setExpiry(e.target.value)}
       />
       <button type="submit">Shorten</button>
     </form>
